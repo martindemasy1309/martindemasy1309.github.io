@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet BTS - Martin Demasy</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- STYLE CSS (Bleu & Blanc - Identique à l'accueil) --- */
+        :root {
+            --primary: #0056b3;        /* Bleu principal */
+            --primary-dark: #003d82;   /* Bleu foncé */
+            --accent: #3b82f6;         /* Bleu clair */
+            --bg-body: #f4f6f9;        /* Gris très clair */
+            --bg-card: #ffffff;        /* Blanc */
+            --text-main: #1f2937;      /* Gris foncé */
+            --text-light: #6b7280;     /* Gris moyen */
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        /* --- SIDEBAR (Navigation Gauche) --- */
+        .sidebar {
+            width: 280px;
+            background: var(--bg-card);
+            height: 100vh;
+            position: fixed;
+            left: 0; top: 0;
+            padding: 2rem;
+            display: flex; flex-direction: column;
+            border-right: 1px solid #e5e7eb;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .profile-area { text-align: center; margin-bottom: 2rem; }
+        .avatar-circle {
+            width: 80px; height: 80px;
+            background: var(--primary);
+            border-radius: 50%; margin: 0 auto 1rem auto;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; font-weight: bold; color: white;
+            box-shadow: 0 4px 10px rgba(0, 86, 179, 0.3);
+        }
+
+        /* Navigation Links */
+        .nav-links { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+        
+        .nav-toggle {
+            display: flex; justify-content: space-between; align-items: center;
+            width: 100%; padding: 0.8rem 1rem;
+            color: var(--text-light); border-radius: 8px;
+            transition: all 0.2s; cursor: pointer; font-weight: 500;
+        }
+        .nav-toggle:hover, .nav-toggle.active { background: #eff6ff; color: var(--primary); }
+        .nav-toggle i.icon-left { width: 20px; text-align: center; margin-right: 10px; }
+        
+        /* Sous-menus */
+        details > summary { list-style: none; outline: none; }
+        details > summary::-webkit-details-marker { display: none; }
+        details[open] .nav-toggle i.chevron { transform: rotate(180deg); }
+        
+        .submenu {
+            list-style: none; padding-left: 2.5rem; margin-top: 0.2rem;
+            display: flex; flex-direction: column; gap: 0.2rem;
+        }
+        .nav-sublink {
+            display: block; color: var(--text-light); padding: 0.4rem 0.8rem;
+            font-size: 0.85rem; border-left: 2px solid #e5e7eb; transition: all 0.2s;
+        }
+        .nav-sublink:hover, .nav-sublink.active { color: var(--primary); border-left-color: var(--primary); background: #f9fafb; }
+
+        .btn-cv {
+            display: block; text-align: center; background: var(--primary); color: white;
+            padding: 0.8rem; border-radius: 8px; font-weight: 600; margin-top: auto;
+            transition: background 0.2s;
+        }
+        .btn-cv:hover { background: var(--primary-dark); }
+
+        /* --- CONTENU PRINCIPAL --- */
+        .main-content { margin-left: 280px; flex: 1; padding: 4rem; width: 100%; }
+        
+        h1 { font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--primary); line-height: 1.2; }
+        .subtitle { color: var(--text-light); font-size: 1.2rem; margin-bottom: 3rem; }
+        
+        h2 { 
+            font-size: 1.6rem; color: var(--text-main); margin: 3rem 0 1.5rem; 
+            border-left: 5px solid var(--accent); padding-left: 1rem; 
+        }
+
+        /* --- BLOCS CONTEXTE --- */
+        .context-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 3rem;
+        }
+
+        .context-card {
+            background: var(--bg-card); border-radius: var(--radius);
+            box-shadow: var(--shadow); padding: 2rem;
+            border-top: 4px solid var(--primary);
+        }
+
+        .context-card h3 { 
+            display: flex; align-items: center; gap: 0.8rem; font-size: 1.2rem; 
+            margin-bottom: 1rem; color: var(--primary-dark); 
+        }
+        .context-card p { font-size: 0.95rem; color: var(--text-light); margin-bottom: 1rem; }
+        .context-card strong { color: var(--text-main); font-weight: 600; }
+
+        /* --- BLOC TECHNIQUE --- */
+        .tech-block {
+            background: var(--bg-card); border-radius: var(--radius);
+            box-shadow: var(--shadow); padding: 2.5rem; margin-bottom: 2rem;
+        }
+
+        .tech-tags { display: flex; gap: 0.8rem; flex-wrap: wrap; margin: 1.5rem 0; }
+        .tag { 
+            background: #eff6ff; color: var(--primary); padding: 0.3rem 0.8rem; 
+            border-radius: 20px; font-size: 0.85rem; font-weight: 600; 
+            border: 1px solid #dbeafe;
+        }
+
+        /* Visionneuse PDF */
+        .pdf-viewer {
+            width: 100%;
+            height: 700px;
+            border: none;
+            background: #e5e7eb;
+            border-radius: 8px;
+            margin-top: 2rem;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .context-grid { grid-template-columns: 1fr; }
+            body { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; position: relative; border-right: none; border-bottom: 1px solid #e5e7eb; }
+            .main-content { margin-left: 0; padding: 2rem; }
+            .pdf-viewer { height: 500px; }
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="profile-area">
+            <div class="avatar-circle">MD</div>
+            <h2>Martin D.</h2>
+            <p style="color:var(--text-light); font-size:0.9rem;">Technicien ESE</p>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-toggle"><span><i class="fa-solid fa-house icon-left"></i> Accueil</span></a></li>
+            
+            <li>
+                <details open>
+                    <summary class="nav-toggle active">
+                        <span><i class="fa-solid fa-folder-open icon-left"></i> Projets</span>
+                        <i class="fa-solid fa-chevron-down chevron"></i>
+                    </summary>
+                    <ul class="submenu">
+                        <li><a href="BUT.html" class="nav-sublink">🎓 Projets BUT</a></li>
+                        <li><a href="BTS.html" class="nav-sublink active">🏭 Projet BTS</a></li>
+                        <li><a href="Perso.html" class="nav-sublink">🚀 Projets Perso</a></li>
+                    </ul>
+                </details>
+            </li>
+
+            <li><a href="Experience.html" class="nav-toggle"><span><i class="fa-solid fa-briefcase icon-left"></i> Expérience</span></a></li>
+
+            <li>
+                <details>
+                    <summary class="nav-toggle">
+                        <span><i class="fa-solid fa-layer-group icon-left"></i> Compétences</span>
+                        <i class="fa-solid fa-chevron-down chevron"></i>
+                    </summary>
+                    <ul class="submenu">
+                        <li><a href="Concevoir.html" class="nav-sublink">C1. Concevoir</a></li>
+                        <li><a href="Implanter.html" class="nav-sublink">C2. Implanter</a></li>
+                        <li><a href="Verifier.html" class="nav-sublink">C3. Vérifier</a></li>
+                        <li><a href="Maintenir.html" class="nav-sublink">C4. Maintenir</a></li>
+                        <li><a href="Manager.html" class="nav-sublink">C5. Manager</a></li>
+                    </ul>
+                </details>
+            </li>
+        </ul>
+
+    </aside>
+
+    <div class="main-content">
+        
+        <header>
+            <h1>Projet Technique BTS</h1>
+            <p class="subtitle">Conception d'un banc de test pour alimentations ATX</p>
+        </header>
+
+        <section>
+            <h2>De quoi s'agit-il ?</h2>
+            <p style="margin-bottom: 2rem; color: var(--text-light);">
+                Ce projet n'est pas un simple exercice scolaire. C'est une solution technique complète que j'ai développée pour répondre à une problématique réelle rencontrée lors de mon alternance.
+            </p>
+
+            <div class="context-grid">
+                
+                <article class="context-card">
+                    <h3><i class="fa-solid fa-briefcase"></i> Mon Alternance (Cybertek)</h3>
+                    <p>
+                        Pendant 2 ans, j'ai occupé le poste de <strong>Technicien SAV</strong>. Ma mission principale était le diagnostic de PC gamer ou bureautique ainsi que sa réparation en changeant la pièce défectueuse (carte mère, alimentation...).
+                    </p>
+                    <p>
+                        <strong>Le Problème :</strong> Pour tester le 24 pins d'une alimentation de PC (ATX), nous devions utiliser un outil peu efficace et peu précis qui mesurait les tensions mais non en fonctionnement. C'était lent, peu fiable et risqué.
+                    </p>
+                    <p>
+                        <strong>Mon besoin :</strong> Un outil capable de faire tout ça automatiquement en quelques secondes pendant le fonctionnement du PC.
+                    </p>
+                </article>
+
+                <article class="context-card">
+                    <h3><i class="fa-solid fa-graduation-cap"></i> Ma Formation (BTS SN-EC)</h3>
+                    <p>
+                        Le <strong>BTS Systèmes Numériques (Option Électronique)</strong> forme à la conception de cartes et à la programmation embarquée.
+                    </p>
+                    <p>
+                        Pour valider mon diplôme, je devais mener un projet technique de A à Z. J'ai donc saisi l'opportunité de créer ce "Banc de Test ATX" pour Cybertek. Cela m'a permis d'appliquer mes cours (Routage, C++) à un cas concret.
+                    </p>
+                </article>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>La Solution Développée</h2>
+            
+            <article class="tech-block">
+                <h3>Le Produit Fini</h3>
+                <p>
+                    J'ai conçu une carte électronique autonome qui se branche directement sur le connecteur 24 broches de l'alimentation. Elle automatise le diagnostic complet.
+                </p>
+                
+                <ul style="margin-left: 1.5rem; margin-top: 1rem; color: var(--text-main);">
+                    <li><strong>Simulation de démarrage :</strong> La carte envoie le signal <code>PS_ON</code> pour allumer l'alimentation.</li>
+                    <li><strong>Mesures de tension :</strong> Vérification des rails +12V, +5V et +3.3V.</li>
+                    <li><strong>Mesure de courant :</strong> Utilisation de capteurs à effet Hall pour voir si l'alimentation tient la charge.</li>
+                    <li><strong>Interface PC :</strong> Envoi des données via USB à un logiciel (Processing) pour visualiser les courbes.</li>
+                </ul>
+
+                <div class="tech-tags">
+                    <span class="tag"><i class="fa-solid fa-microchip"></i> Arduino Nano</span>
+                    <span class="tag"><i class="fa-solid fa-bezier-curve"></i> routage PCB</span>
+                    <span class="tag"><i class="fa-solid fa-bolt"></i> Capteurs Hall</span>
+                    <span class="tag"><i class="fa-solid fa-code"></i> Processing / C++</span>
+                </div>
+
+                <h3 style="margin-top: 3rem; font-size: 1.1rem; color: var(--text-main);">
+                    <i class="fa-solid fa-book-open" style="color:var(--primary)"></i> Consulter le Rapport Technique (E6.2)
+                </h3>
+                <p style="font-size: 0.9rem; color: var(--text-light);">
+                    Découvrez ci-dessous l'intégralité du dossier technique présenté au jury : Schémas, Typons, Algorithmes et Mesures.
+                </p>
+
+                <iframe src="https://drive.google.com/file/d/1v6VJE6UEEZCnUWJ2wGe3qOoZIwBTfHiJ/preview" class="pdf-viewer" title="Rapport Projet BTS"></iframe>
+            
+            </article>
+
+        </section>
+
+    </div>
+
+</body>
+</html>

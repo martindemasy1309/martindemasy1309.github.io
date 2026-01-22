@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compétence Concevoir - Martin Demasy</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- STYLE GLOBAL (Structure Sidebar) --- */
+        :root {
+            --primary: #0056b3;
+            --primary-dark: #003d82;
+            --accent: #3b82f6;
+            --concevoir: #0891b2; /* Couleur Cyan pour Concevoir */
+            --bg-body: #f4f6f9;
+            --bg-card: #ffffff;
+            --text-main: #1f2937;
+            --text-light: #6b7280;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        /* --- SIDEBAR (Menu Gauche) --- */
+        .sidebar {
+            width: 280px;
+            background: var(--bg-card);
+            height: 100vh;
+            position: fixed;
+            left: 0; top: 0;
+            padding: 2rem;
+            display: flex; flex-direction: column;
+            border-right: 1px solid #e5e7eb;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .profile-area { text-align: center; margin-bottom: 2rem; }
+        .avatar-circle {
+            width: 80px; height: 80px;
+            background: var(--primary);
+            border-radius: 50%; margin: 0 auto 1rem auto;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; font-weight: bold; color: white;
+            box-shadow: 0 4px 10px rgba(0, 86, 179, 0.3);
+        }
+
+        /* Liens Navigation */
+        .nav-links { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+        
+        .nav-toggle {
+            display: flex; justify-content: space-between; align-items: center;
+            width: 100%; padding: 0.8rem 1rem;
+            color: var(--text-light); border-radius: 8px;
+            transition: all 0.2s; cursor: pointer; font-weight: 500;
+        }
+        .nav-toggle:hover, .nav-toggle.active { background: #eff6ff; color: var(--primary); }
+        .nav-toggle i.icon-left { width: 20px; text-align: center; margin-right: 10px; }
+        
+        /* Sous-menus (Details/Summary) */
+        details > summary { list-style: none; outline: none; }
+        details > summary::-webkit-details-marker { display: none; }
+        details[open] .nav-toggle i.chevron { transform: rotate(180deg); }
+        
+        .submenu {
+            list-style: none; padding-left: 2.5rem; margin-top: 0.2rem;
+            display: flex; flex-direction: column; gap: 0.2rem;
+        }
+        .nav-sublink {
+            display: block; color: var(--text-light); padding: 0.4rem 0.8rem;
+            font-size: 0.85rem; border-left: 2px solid #e5e7eb; transition: all 0.2s;
+        }
+        .nav-sublink:hover, .nav-sublink.active { color: var(--primary); border-left-color: var(--primary); background: #f9fafb; }
+
+        .btn-cv {
+            display: block; text-align: center; background: var(--primary); color: white;
+            padding: 0.8rem; border-radius: 8px; font-weight: 600; margin-top: auto;
+            transition: background 0.2s;
+        }
+        .btn-cv:hover { background: var(--primary-dark); }
+
+
+        /* --- CONTENU PRINCIPAL --- */
+        .main-content { margin-left: 280px; flex: 1; padding: 4rem; width: 100%; }
+        
+        h1 { font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--primary); line-height: 1.2; }
+        .subtitle { color: var(--text-light); font-size: 1.1rem; margin-bottom: 3rem; max-width: 800px; }
+
+        /* --- ÉTAPES DE CONCEPTION --- */
+        .step-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            border-left: 5px solid var(--concevoir);
+            position: relative;
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -20px; left: -20px;
+            background: var(--concevoir); color: white;
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 1.4rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            border: 3px solid #fff;
+        }
+
+        .step-card h3 { color: var(--text-main); margin-top: 0; font-size: 1.5rem; margin-bottom: 0.5rem; padding-left: 1rem; }
+        .step-intro { color: var(--text-light); margin-bottom: 2rem; padding-left: 1rem; font-size: 1rem; }
+
+        /* --- GRILLE D'EXEMPLES --- */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .mini-card {
+            background: #fcfcfc;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex; flex-direction: column;
+        }
+        .mini-card:hover { 
+            border-color: var(--concevoir); 
+            transform: translateY(-3px); 
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+        }
+
+        .mini-card h4 { 
+            color: var(--concevoir); font-size: 1.1rem; margin-bottom: 0.8rem; 
+            display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem;
+        }
+        
+        /* Tags contextuels */
+        .context-tag {
+            font-size: 0.75rem; padding: 3px 10px; border-radius: 12px; font-weight: 600; white-space: nowrap;
+        }
+        .tag-bts { background: #dbeafe; color: #1e40af; }     /* Bleu */
+        .tag-thales { background: #e0e7ff; color: #3730a3; }  /* Indigo */
+        .tag-but { background: #d1fae5; color: #065f46; }     /* Vert */
+        .tag-perso { background: #fef3c7; color: #92400e; }   /* Orange/Ambre */
+
+        .mini-card p { font-size: 0.95rem; color: #4b5563; margin-bottom: 1rem; line-height: 1.6; flex-grow: 1; }
+        
+        .btn-link {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            color: var(--concevoir); font-size: 0.9rem; font-weight: 600; 
+            text-decoration: none; margin-top: auto;
+            transition: color 0.2s;
+        }
+        .btn-link:hover { color: var(--primary-dark); }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .sidebar { display: none; } /* On cache la sidebar sur mobile pour l'instant comme sur les autres pages */
+            .main-content { margin-left: 0; padding: 2rem; }
+            .step-number { left: 0; top: -25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="profile-area">
+            <div class="avatar-circle">MD</div>
+            <h2>Martin D.</h2>
+            <p style="color:var(--text-light); font-size:0.9rem;">Technicien ESE</p>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-toggle"><span><i class="fa-solid fa-house icon-left"></i> Accueil</span></a></li>
+            
+            <li>
+                <details>
+                    <summary class="nav-toggle">
+                        <span><i class="fa-solid fa-folder-open icon-left"></i> Projets</span>
+                        <i class="fa-solid fa-chevron-down chevron"></i>
+                    </summary>
+                    <ul class="submenu">
+                        <li><a href="BUT.html" class="nav-sublink">🎓 Projets BUT</a></li>
+                        <li><a href="BTS.html" class="nav-sublink">🏭 Projet BTS</a></li>
+                        <li><a href="Perso.html" class="nav-sublink">🚀 Projets Perso</a></li>
+                    </ul>
+                </details>
+            </li>
+
+            <li><a href="Experience.html" class="nav-toggle"><span><i class="fa-solid fa-briefcase icon-left"></i> Expérience</span></a></li>
+
+            <li>
+                <details open>
+                    <summary class="nav-toggle active">
+                        <span><i class="fa-solid fa-layer-group icon-left"></i> Compétences</span>
+                        <i class="fa-solid fa-chevron-down chevron"></i>
+                    </summary>
+                    <ul class="submenu">
+                        <li><a href="Concevoir.html" class="nav-sublink active">C1. Concevoir</a></li>
+                        <li><a href="Implanter.html" class="nav-sublink">C2. Implanter</a></li>
+                        <li><a href="Verifier.html" class="nav-sublink">C3. Vérifier</a></li>
+                        <li><a href="Maintenir.html" class="nav-sublink">C4. Maintenir</a></li>
+                        <li><a href="Manager.html" class="nav-sublink">C5. Manager</a></li>
+                    </ul>
+                </details>
+            </li>
+        </ul>
+
+        </a>
+    </aside>
+
+    <div class="main-content">
+        
+        <header>
+            <h1>Compétence : Concevoir</h1>
+            <p class="subtitle">
+                Transformer un besoin client en une solution technique viable.<br>
+                Ma démarche : Analyser > Choisir > Simuler > Fabriquer > Programmer.
+            </p>
+        </header>
+
+        <article class="step-card">
+            <div class="step-number">1</div>
+            <h3>Analyse Fonctionnelle & Architecture</h3>
+            <p class="step-intro">
+                Avant de choisir des composants, je traduis le besoin en fonctions techniques et je définis l'architecture globale. C'est l'étape où l'on comprend "comment ça marche" ou "comment ça va marcher".
+            </p>
+
+            <div class="examples-grid">
+                <div class="mini-card">
+                    <h4>Banc de test ATX <span class="context-tag tag-bts">Projet BTS</span></h4>
+                    <p>
+                        <strong>Contexte :</strong> Remplacer un testeur manuel peu fiable. <br>
+                        <strong>Approche :</strong> J'ai décomposé le système en trois blocs distincts pour simplifier la maintenance : un bloc Puissance (Relais/Charge), un bloc Mesure (Ponts diviseurs) et un bloc IHM (Interface PC). Cette modularité a permis de développer le logiciel indépendamment du matériel.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <h4>Rétro-ingénierie Switch <span class="context-tag tag-perso">Projet Perso</span></h4>
+                    <p>
+                        <strong>Contexte :</strong> Réparation sans schémas officiels. <br>
+                        <strong>Approche :</strong> Pour réparer des consoles complexes, je dois d'abord analyser l'architecture de la carte mère. J'identifie les circuits de gestion d'alimentation (PMIC) et les bus de données (HDMI/USB-C) pour comprendre l'origine de la panne avant d'intervenir.
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <article class="step-card">
+            <div class="step-number">2</div>
+            <h3>Simulation & Dérisquage</h3>
+            <p class="step-intro">
+                L'étape clé pour valider les hypothèses théoriques sans gâcher de matériel. J'utilise des outils numériques pour prédire le comportement du système.
+            </p>
+
+            <div class="examples-grid">
+                <div class="mini-card">
+                    <h4>Antenne HB9CV <span class="context-tag tag-but">Projet BUT</span></h4>
+                    <p>
+                        Avant de couper le moindre tube d'aluminium, j'ai modélisé la géométrie de l'antenne sur <strong>MMANA-GAL</strong>. Cela m'a permis d'ajuster l'espacement entre les éléments pour maximiser le gain avant/arrière et garantir la directivité requise pour la chasse au renard.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <h4>Outillage de Production <span class="context-tag tag-thales">Stage Thales</span></h4>
+                    <p>
+                        Dans un environnement industriel contraint, j'ai réalisé une modélisation 3D (CAO) de l'outillage pour vérifier son intégration sur le poste de travail. Cela a permis de détecter une collision potentielle avec un équipement existant avant le lancement de l'usinage.
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <article class="step-card">
+            <div class="step-number">3</div>
+            <h3>Choix Technologiques & PCB</h3>
+            <p class="step-intro">
+                Sélection des composants (compromis Coût/Performance) et conception de la carte électronique (Routage).
+            </p>
+
+            <div class="examples-grid">
+                <div class="mini-card">
+                    <h4>Capteurs Robot Sumo <span class="context-tag tag-but">Projet BUT</span></h4>
+                    <p>
+                        Le choix des capteurs est critique. J'ai privilégié les capteurs infrarouges <strong>Sharp GP2Y0A21</strong> par rapport aux ultrasons. 
+                        <br><em>Pourquoi ?</em> Un temps de réponse bien plus rapide (39ms) et une insensibilité au bruit ambiant de la salle de compétition.
+                    </p>
+                   </div>
+
+                <div class="mini-card">
+                    <h4>Routage de Carte <span class="context-tag tag-bts">Projet BTS</span></h4>
+                    <p>
+                        Conception du PCB du banc de test sous <strong>EasyEDA</strong>. J'ai dû dimensionner spécifiquement les pistes de masse et d'alimentation pour qu'elles supportent les courants de retour des charges actives sans échauffement excessif.
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <article class="step-card">
+            <div class="step-number">4</div>
+            <h3>Développement Logiciel Embarqué</h3>
+            <p class="step-intro">
+                Le matériel ne suffit pas. Je conçois des algorithmes robustes (C/C++, Arduino) pour donner vie au système et assurer un comportement prédictible.
+            </p>
+
+            <div class="examples-grid">
+                <div class="mini-card">
+                    <h4>Machine à États <span class="context-tag tag-but">Projet BUT</span></h4>
+                    <p>
+                        Pour le Robot Sumo, un code linéaire était impossible. J'ai structuré le programme autour d'une <strong>Machine à États Finis (State Machine)</strong> : Recherche -> Attaque -> Survie. Cela garantit que le robot réagit instantanément aux capteurs, peu importe l'action en cours.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <h4>Interface IHM <span class="context-tag tag-bts">Projet BTS</span></h4>
+                    <p>
+                        J'ai développé une interface graphique sur PC avec <strong>Processing</strong>. Elle communique en temps réel via le port Série avec l'Arduino pour récupérer les mesures de tension et tracer les courbes, offrant une visualisation immédiate à l'utilisateur.
+                    </p>
+                </div>
+            </div>
+        </article>
+
+    </div>
+
+</body>
+</html>

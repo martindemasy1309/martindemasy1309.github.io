@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Parcours - Martin Demasy</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- STYLE IDENTIQUE À L'ACCUEIL (Bleu & Blanc) --- */
+        :root {
+            --primary: #0056b3; --primary-dark: #003d82; --accent: #3b82f6;
+            --bg-body: #f4f6f9; --bg-card: #ffffff; --text-main: #1f2937; --text-light: #6b7280;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); --radius: 12px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg-body); color: var(--text-main); display: flex; min-height: 100vh; }
+        a { text-decoration: none; color: inherit; }
+
+        /* SIDEBAR */
+        .sidebar { width: 280px; background: var(--bg-card); height: 100vh; position: fixed; left: 0; top: 0; padding: 2rem; display: flex; flex-direction: column; border-right: 1px solid #e5e7eb; z-index: 1000; overflow-y: auto; }
+        .profile-area { text-align: center; margin-bottom: 2rem; }
+        .avatar-circle { width: 80px; height: 80px; background: var(--primary); border-radius: 50%; margin: 0 auto 1rem auto; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; color: white; box-shadow: 0 4px 10px rgba(0, 86, 179, 0.3); }
+        .nav-links { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+        .nav-toggle { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0.8rem 1rem; color: var(--text-light); border-radius: 8px; transition: all 0.2s; cursor: pointer; font-weight: 500; }
+        .nav-toggle:hover, .nav-toggle.active { background: #eff6ff; color: var(--primary); }
+        .nav-toggle i.icon-left { width: 20px; text-align: center; margin-right: 10px; }
+        details > summary { list-style: none; outline: none; } details > summary::-webkit-details-marker { display: none; } details[open] .nav-toggle i.chevron { transform: rotate(180deg); }
+        .submenu { list-style: none; padding-left: 2.5rem; margin-top: 0.2rem; display: flex; flex-direction: column; gap: 0.2rem; }
+        .nav-sublink { display: block; color: var(--text-light); padding: 0.4rem 0.8rem; font-size: 0.85rem; border-left: 2px solid #e5e7eb; transition: all 0.2s; }
+        .nav-sublink:hover, .nav-sublink.active { color: var(--primary); border-left-color: var(--primary); background: #f9fafb; }
+        .btn-cv { display: block; text-align: center; background: var(--primary); color: white; padding: 0.8rem; border-radius: 8px; font-weight: 600; margin-top: auto; transition: background 0.2s; }
+        
+        /* CONTENT */
+        .main-content { margin-left: 280px; flex: 1; padding: 4rem; width: 100%; }
+        h1 { font-size: 2.5rem; color: var(--primary); margin-bottom: 0.5rem; }
+        .subtitle { color: var(--text-light); margin-bottom: 3rem; font-size: 1.1rem; }
+
+        /* TIMELINE STYLE */
+        .timeline-container { position: relative; display: flex; flex-direction: column; gap: 4rem; }
+        .timeline-container::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: #e5e7eb; transform: translateX(-50%); z-index: 0; }
+        .timeline-row { display: flex; justify-content: space-between; align-items: flex-start; position: relative; z-index: 1; }
+        .year-badge { position: absolute; left: 50%; transform: translateX(-50%); background: var(--primary); color: white; padding: 0.4rem 1.2rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); white-space: nowrap; }
+        .card-col { width: 45%; }
+
+        .xp-card { background: var(--bg-card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.5rem; border-top: 4px solid transparent; transition: transform 0.3s; }
+        .xp-card:hover { transform: translateY(-5px); }
+        .xp-card.school { border-top-color: var(--accent); text-align: right; }
+        .xp-card.school .header { flex-direction: row-reverse; }
+        .xp-card.work { border-top-color: #0f172a; text-align: left; }
+        
+        .xp-card h3 { font-size: 1.1rem; color: var(--text-main); margin-bottom: 0.2rem; }
+        .xp-card h4 { font-size: 0.9rem; color: var(--primary); font-weight: 600; margin-bottom: 1rem; }
+        .xp-card ul { list-style: none; font-size: 0.9rem; color: var(--text-light); padding: 0; }
+        .xp-card ul li { margin-bottom: 0.5rem; }
+        .xp-card.work ul li::before { content: "• "; color: var(--primary); font-weight: bold; }
+        
+        /* Bouton lien Google Drive */
+        .btn-link { 
+            display: inline-block; margin-top: 1rem; font-size: 0.85rem; color: var(--primary); 
+            border: 1px solid var(--primary); padding: 0.3rem 0.8rem; border-radius: 4px; 
+            transition: 0.2s; text-decoration: none;
+        }
+        .btn-link:hover { background: var(--primary); color: white; }
+
+        @media (max-width: 900px) {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; padding: 2rem; }
+            .timeline-container::before { left: 20px; }
+            .timeline-row { flex-direction: column; gap: 1rem; margin-bottom: 3rem; }
+            .year-badge { position: relative; left: 0; transform: none; display: inline-block; margin-bottom: 1rem; margin-left: 3rem; }
+            .card-col { width: 100%; padding-left: 3rem; }
+            .xp-card.school { text-align: left; border-left: 4px solid var(--accent); border-top: none; }
+            .xp-card.work { text-align: left; border-left: 4px solid #0f172a; border-top: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="profile-area">
+            <div class="avatar-circle">MD</div>
+            <h2>Martin D.</h2>
+            <p style="color:var(--text-light); font-size:0.9rem;">Technicien ESE</p>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-toggle"><span><i class="fa-solid fa-house icon-left"></i> Accueil</span></a></li>
+            <li>
+                <details>
+                    <summary class="nav-toggle">
+                        <span><i class="fa-solid fa-folder-open icon-left"></i> Projets</span>
+                        <i class="fa-solid fa-chevron-down chevron"></i>
+                    </summary>
+                    <ul class="submenu">
+                        <li><a href="BUT.html" class="nav-sublink">🎓 Projets BUT</a></li>
+                        <li><a href="BTS.html" class="nav-sublink">🏭 Projet BTS</a></li>
+                        <li><a href="Perso.html" class="nav-sublink">🚀 Projets Perso</a></li>
+                    </ul>
+                </details>
+            </li>
+            <li><a href="Experience.html" class="nav-toggle active"><span><i class="fa-solid fa-briefcase icon-left"></i> Expérience</span></a></li>
+            <li>
+                <details>
+                    <summary class="nav-toggle">
+                        <span><i class="fa-solid fa-layer-group icon-left"></i> Compétences</span>
+                        <i class="fa-solid fa-chevron-down chevron"></i>
+                    </summary>
+                    <ul class="submenu">
+                        <li><a href="Concevoir.html" class="nav-sublink">C1. Concevoir</a></li>
+                        <li><a href="Implanter.html" class="nav-sublink">C2. Implanter</a></li>
+                        <li><a href="Verifier.html" class="nav-sublink">C3. Vérifier</a></li>
+                        <li><a href="Maintenir.html" class="nav-sublink">C4. Maintenir</a></li>
+                        <li><a href="Manager.html" class="nav-sublink">C5. Manager</a></li>
+                    </ul>
+                </details>
+            </li>
+        </ul>
+    </aside>
+
+    <div class="main-content">
+        <h1>Mon Parcours</h1>
+        <p class="subtitle">Une montée en compétences simultanée entre formation académique et réalité du terrain.</p>
+
+        <div class="timeline-container">
+
+            <div class="timeline-row">
+                <div class="year-badge">2024 - 2026</div>
+
+                <div class="card-col">
+                    <div class="xp-card school">
+                        <h3><i class="fa-solid fa-graduation-cap"></i> IUT de Bordeaux</h3>
+                        <h4>BUT GEII (2ème Année)</h4>
+                        <ul>
+                            <li>Génie Électrique & Info Indus.</li>
+                            <li><strong>TP Techniques </strong></li>
+                            <li>Projets en équipe (SAÉ) : Robotique, RF, Systèmes embarqués.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card-col">
+                    <div class="xp-card work">
+                        <h3><i class="fa-solid fa-building"></i> THALES</h3>
+                        <h4>Stagiaire NPI (2,5 mois)</h4>
+                        <ul>
+                            <li><strong>Projet Principal :</strong> Création d'un outillage d'aide à la production (étude, conception, prototypage).</li>
+                            <li>Accompagnement ponctuel des techniciens (Méthodes & Industrialisation) en début de stage.</li>
+                            <li>Découverte des contraintes du secteur Défense/Aéronautique.</li>
+                        </ul>
+                        <a href="https://drive.google.com/file/d/1DtUeonnLCSWhtvfJ2_-MJh5pGcw9l8aN/preview" target="_blank" class="btn-link">
+                            <i class="fa-solid fa-eye"></i> Consulter le rapport de stage
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-row">
+                <div class="year-badge">2022 - 2024</div>
+
+                <div class="card-col">
+                    <div class="xp-card school">
+                        <h3><i class="fa-solid fa-graduation-cap"></i> CFAI Aquitaine</h3>
+                        <h4>BTS Systèmes Numériques (SN-EC)</h4>
+                        <ul>
+                            <li>Formation en <strong>Alternance</strong>.</li>
+                            <li>Nombreux TP manuels (Câblage, Mesures, Soudure).</li>
+                            <li>Option Électronique et Communications.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card-col">
+                    <div class="xp-card work">
+                        <h3><i class="fa-solid fa-building"></i> CYBERTEK</h3>
+                        <h4>Technicien SAV (Alternance 2 ans)</h4>
+                        <ul>
+                            <li><strong>Diagnostic :</strong> Réception du matériel, tests croisés pour identifier la pièce défectueuse sur PC Fixes (Gamer/Bureautique).</li>
+                            <li><strong>Réparation :</strong> Commande fournisseur et remplacement standard de composants (Carte mère, CPU, GPU). Pas de micro-soudure.</li>
+                            <li><strong>Projet d'étude :</strong> Conception complète d'un banc de test pour alimentations ATX.</li>
+                        </ul>
+                        <a href="https://drive.google.com/file/d/1v6VJE6UEEZCnUWJ2wGe3qOoZIwBTfHiJ/preview" target="_blank" class="btn-link">
+                            <i class="fa-solid fa-eye"></i> Voir le rapport Projet ATX
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

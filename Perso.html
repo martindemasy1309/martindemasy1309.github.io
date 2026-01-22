@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projets Perso - Martin Demasy</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- STYLE IDENTIQUE À L'ACCUEIL (Bleu & Blanc) --- */
+        :root {
+            --primary: #0056b3; --primary-dark: #003d82; --accent: #3b82f6;
+            --bg-body: #f4f6f9; --bg-card: #ffffff; --text-main: #1f2937; --text-light: #6b7280;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); --radius: 12px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg-body); color: var(--text-main); display: flex; min-height: 100vh; }
+        a { text-decoration: none; color: inherit; }
+
+        /* SIDEBAR */
+        .sidebar { width: 280px; background: var(--bg-card); height: 100vh; position: fixed; left: 0; top: 0; padding: 2rem; display: flex; flex-direction: column; border-right: 1px solid #e5e7eb; z-index: 1000; overflow-y: auto; }
+        .profile-area { text-align: center; margin-bottom: 2rem; }
+        .avatar-circle { width: 80px; height: 80px; background: var(--primary); border-radius: 50%; margin: 0 auto 1rem auto; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; color: white; box-shadow: 0 4px 10px rgba(0, 86, 179, 0.3); }
+        .nav-links { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+        .nav-toggle { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0.8rem 1rem; color: var(--text-light); border-radius: 8px; transition: all 0.2s; cursor: pointer; font-weight: 500; }
+        .nav-toggle:hover, .nav-toggle.active { background: #eff6ff; color: var(--primary); }
+        .nav-toggle i.icon-left { width: 20px; text-align: center; margin-right: 10px; }
+        details > summary { list-style: none; outline: none; } details > summary::-webkit-details-marker { display: none; } details[open] .nav-toggle i.chevron { transform: rotate(180deg); }
+        .submenu { list-style: none; padding-left: 2.5rem; margin-top: 0.2rem; display: flex; flex-direction: column; gap: 0.2rem; }
+        .nav-sublink { display: block; color: var(--text-light); padding: 0.4rem 0.8rem; font-size: 0.85rem; border-left: 2px solid #e5e7eb; transition: all 0.2s; }
+        .nav-sublink:hover, .nav-sublink.active { color: var(--primary); border-left-color: var(--primary); background: #f9fafb; }
+        .btn-cv { display: block; text-align: center; background: var(--primary); color: white; padding: 0.8rem; border-radius: 8px; font-weight: 600; margin-top: auto; transition: background 0.2s; }
+        
+        /* CONTENT */
+        .main-content { margin-left: 280px; flex: 1; padding: 4rem; width: 100%; }
+        h1 { font-size: 2.5rem; color: var(--primary); margin-bottom: 0.5rem; }
+        .subtitle { color: var(--text-light); margin-bottom: 3rem; font-size: 1.1rem; }
+        
+        h2 { font-size: 1.6rem; color: var(--text-main); margin: 3rem 0 1.5rem; border-left: 5px solid var(--accent); padding-left: 1rem; }
+
+        /* BLOCS CONTENU */
+        .lab-card {
+            background: var(--bg-card); border-radius: var(--radius); box-shadow: var(--shadow);
+            padding: 2rem; margin-bottom: 2rem;
+        }
+        .lab-card h3 { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem; color: var(--primary); }
+        
+        .repair-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        
+        .tool-list { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; }
+        .tool-tag { 
+            display: flex; align-items: center; gap: 0.5rem;
+            background: #eff6ff; color: var(--primary-dark); 
+            padding: 0.5rem 1rem; border-radius: 8px; font-weight: 500; font-size: 0.9rem;
+            border: 1px solid #dbeafe;
+        }
+
+        .alert-box {
+            background: #fff7ed; border-left: 4px solid #f97316; padding: 1rem;
+            margin-top: 2rem; border-radius: 4px; color: #9a3412; font-size: 0.95rem;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar { display: none; } 
+            .main-content { margin-left: 0; padding: 2rem; }
+            .repair-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="profile-area">
+            <div class="avatar-circle">MD</div>
+            <h2>Martin D.</h2>
+            <p style="color:var(--text-light); font-size:0.9rem;">Technicien ESE</p>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-toggle"><span><i class="fa-solid fa-house icon-left"></i> Accueil</span></a></li>
+            <li>
+                <details open>
+                    <summary class="nav-toggle active">
+                        <span><i class="fa-solid fa-folder-open icon-left"></i> Projets</span>
+                        <i class="fa-solid fa-chevron-down chevron"></i>
+                    </summary>
+                    <ul class="submenu">
+                        <li><a href="BUT.html" class="nav-sublink">🎓 Projets BUT</a></li>
+                        <li><a href="BTS.html" class="nav-sublink">🏭 Projet BTS</a></li>
+                        <li><a href="Perso.html" class="nav-sublink active">🚀 Projets Perso</a></li>
+                    </ul>
+                </details>
+            </li>
+            <li><a href="Experience.html" class="nav-toggle"><span><i class="fa-solid fa-briefcase icon-left"></i> Expérience</span></a></li>
+            <li>
+                <details>
+                    <summary class="nav-toggle">
+                        <span><i class="fa-solid fa-layer-group icon-left"></i> Compétences</span>
+                        <i class="fa-solid fa-chevron-down chevron"></i>
+                    </summary>
+                    <ul class="submenu">
+                        <li><a href="Concevoir.html" class="nav-sublink">C1. Concevoir</a></li>
+                        <li><a href="Implanter.html" class="nav-sublink">C2. Implanter</a></li>
+                        <li><a href="Verifier.html" class="nav-sublink">C3. Vérifier</a></li>
+                        <li><a href="Maintenir.html" class="nav-sublink">C4. Maintenir</a></li>
+                        <li><a href="Manager.html" class="nav-sublink">C5. Manager</a></li>
+                    </ul>
+                </details>
+            </li>
+        </ul>
+    </aside>
+
+    <div class="main-content">
+        <h1>Projets Personnels & Home Lab</h1>
+        <p class="subtitle">La passion continue à la maison. Réparations, microssoudure et tentatives de sauvetage.</p>
+
+        <section class="lab-card">
+            <h3><i class="fa-solid fa-screwdriver-wrench"></i> Mon Équipement Personnel</h3>
+            <p>
+                Pour pratiquer l'électronique en dehors des cours et de l'entreprise, je me suis constitué un petit laboratoire de réparation à domicile. Cela me permet d'intervenir sur des composants CMS et de réaliser des diagnostics précis.
+            </p>
+            <div class="tool-list">
+                <span class="tool-tag"><i class="fa-solid fa-fire-burner"></i> Station Air Chaud</span>
+                <span class="tool-tag"><i class="fa-solid fa-temperature-high"></i> Fer à souder régulé</span>
+                <span class="tool-tag"><i class="fa-solid fa-bolt"></i> Multimètre</span>
+                <span class="tool-tag"><i class="fa-solid fa-microscope"></i> Loupe / Binoculaire</span>
+            </div>
+        </section>
+
+        <h2>Réparations Marquantes</h2>
+
+        <div class="repair-grid">
+            <article class="lab-card" style="border-left: 4px solid var(--accent);">
+                <h3><i class="fa-solid fa-gamepad"></i> Sauvetage Nintendo Switch</h3>
+                <p><strong>Problème :</strong> Console fonctionnelle en portable, mais aucune image sur la TV une fois dans le dock.</p>
+                <p><strong>Diagnostic :</strong> Puce de gestion vidéo (P13USB) HS. C'est un composant CMS très fin.</p>
+                <p><strong>Intervention :</strong></p>
+                <ul style="margin-left: 1.5rem; font-size: 0.95rem; color: var(--text-light);">
+                    <li>Récupération d'une pièce donneuse sur une carte mère Switch HS (Processeur décollé, irréparable).</li>
+                    <li>Dessoudage de la puce HS à l'air chaud (flux + température contrôlée).</li>
+                    <li>Ressoudage de la puce de récupération.</li>
+                </ul>
+                <p style="margin-top: 1rem; color: #16a34a; font-weight: 600;">✅ Résultat : Affichage TV rétabli.</p>
+            </article>
+
+            <article class="lab-card" style="border-left: 4px solid var(--primary);">
+                <h3><i class="fa-solid fa-wrench"></i> Manettes & Joy-Cons</h3>
+                <p>
+                    Je répare régulièrement des périphériques de jeu pour mon entourage.
+                </p>
+                <ul style="margin-left: 1.5rem; margin-top:1rem; font-size: 0.95rem; color: var(--text-light);">
+                    <li><strong>Joy-Con Drift :</strong> Remplacement des joysticks analogiques usés.</li>
+                    <li><strong>Pistes coupées :</strong> Réparation de pistes conductrices sur les PCB flexibles (nappes) suite à des chutes ou oxydation.</li>
+                    <li><strong>Boutons :</strong> Remplacement de micro-switchs dessoudés.</li>
+                </ul>
+            </article>
+        </div>
+
+        <div class="alert-box">
+            <i class="fa-solid fa-triangle-exclamation"></i> <strong>L'école de l'humilité</strong><br>
+            Je tente régulièrement de réparer divers objets du quotidien. Parfois, ça fonctionne et c'est une victoire. D'autres fois, malgré tous mes efforts, la réparation échoue (composant introuvable, dégâts trop importants). C'est aussi comme ça que j'apprends à mieux diagnostiquer et à connaître mes limites.
+        </div>
+
+    </div>
+
+</body>
+</html>

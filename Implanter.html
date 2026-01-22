@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compétence Implanter - Martin Demasy</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- STYLE GLOBAL --- */
+        :root {
+            --primary: #0056b3;
+            --primary-dark: #003d82;
+            --accent: #3b82f6;
+            --implanter: #d35400; /* Couleur "Rouille/Cuivre" pour la Fab/Implantation */
+            --bg-body: #f4f6f9;
+            --bg-card: #ffffff;
+            --text-main: #1f2937;
+            --text-light: #6b7280;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        /* --- SIDEBAR (Navigation Gauche) --- */
+        .sidebar {
+            width: 280px;
+            background: var(--bg-card);
+            height: 100vh;
+            position: fixed;
+            left: 0; top: 0;
+            padding: 2rem;
+            display: flex; flex-direction: column;
+            border-right: 1px solid #e5e7eb;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .profile-area { text-align: center; margin-bottom: 2rem; }
+        .avatar-circle {
+            width: 80px; height: 80px;
+            background: var(--primary);
+            border-radius: 50%; margin: 0 auto 1rem auto;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; font-weight: bold; color: white;
+            box-shadow: 0 4px 10px rgba(0, 86, 179, 0.3);
+        }
+
+        /* Navigation Links */
+        .nav-links { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+        
+        .nav-toggle {
+            display: flex; justify-content: space-between; align-items: center;
+            width: 100%; padding: 0.8rem 1rem;
+            color: var(--text-light); border-radius: 8px;
+            transition: all 0.2s; cursor: pointer; font-weight: 500;
+        }
+        .nav-toggle:hover, .nav-toggle.active { background: #eff6ff; color: var(--primary); }
+        .nav-toggle i.icon-left { width: 20px; text-align: center; margin-right: 10px; }
+        
+        /* Sous-menus */
+        details > summary { list-style: none; outline: none; }
+        details > summary::-webkit-details-marker { display: none; }
+        details[open] .nav-toggle i.chevron { transform: rotate(180deg); }
+        
+        .submenu {
+            list-style: none; padding-left: 2.5rem; margin-top: 0.2rem;
+            display: flex; flex-direction: column; gap: 0.2rem;
+        }
+        .nav-sublink {
+            display: block; color: var(--text-light); padding: 0.4rem 0.8rem;
+            font-size: 0.85rem; border-left: 2px solid #e5e7eb; transition: all 0.2s;
+        }
+        .nav-sublink:hover, .nav-sublink.active { color: var(--primary); border-left-color: var(--primary); background: #f9fafb; }
+
+        .btn-cv {
+            display: block; text-align: center; background: var(--primary); color: white;
+            padding: 0.8rem; border-radius: 8px; font-weight: 600; margin-top: auto;
+            transition: background 0.2s;
+        }
+        .btn-cv:hover { background: var(--primary-dark); }
+
+        /* --- CONTENU PRINCIPAL --- */
+        .main-content { margin-left: 280px; flex: 1; padding: 4rem; width: 100%; }
+        
+        h1 { font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--primary); line-height: 1.2; }
+        .subtitle { color: var(--text-light); font-size: 1.1rem; margin-bottom: 3rem; max-width: 800px; }
+
+        /* --- ÉTAPES D'IMPLANTATION --- */
+        .step-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            border-left: 5px solid var(--implanter);
+            position: relative;
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -20px; left: -20px;
+            background: var(--implanter); color: white;
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 1.4rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            border: 3px solid #fff;
+        }
+
+        .step-card h3 { color: var(--text-main); margin-top: 0; font-size: 1.5rem; margin-bottom: 0.5rem; padding-left: 1rem; }
+        .step-intro { color: var(--text-light); margin-bottom: 2rem; padding-left: 1rem; font-size: 1rem; }
+
+        /* --- GRILLE D'EXEMPLES --- */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .mini-card {
+            background: #fffafa; /* Blanc cassé très léger vers le rouge/orange */
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex; flex-direction: column;
+        }
+        .mini-card:hover { 
+            border-color: var(--implanter); 
+            transform: translateY(-3px); 
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+        }
+
+        .mini-card h4 { 
+            color: var(--implanter); font-size: 1.1rem; margin-bottom: 0.8rem; 
+            display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem;
+        }
+        
+        /* Tags contextuels */
+        .context-tag {
+            font-size: 0.75rem; padding: 3px 10px; border-radius: 12px; font-weight: 600; white-space: nowrap;
+        }
+        .tag-bts { background: #dbeafe; color: #1e40af; }     /* Bleu */
+        .tag-thales { background: #e0e7ff; color: #3730a3; }  /* Indigo */
+        .tag-but { background: #d1fae5; color: #065f46; }     /* Vert */
+        .tag-perso { background: #fff7ed; color: #9a3412; }   /* Orange */
+
+        .mini-card p { font-size: 0.95rem; color: #4b5563; margin-bottom: 1rem; line-height: 1.6; flex-grow: 1; }
+        
+        .btn-link {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            color: var(--implanter); font-size: 0.9rem; font-weight: 600; 
+            text-decoration: none; margin-top: auto;
+            transition: color 0.2s;
+        }
+        .btn-link:hover { color: #a04000; }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; padding: 2rem; }
+            .step-number { left: 0; top: -25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="profile-area">
+            <div class="avatar-circle">MD</div>
+            <h2>Martin D.</h2>
+            <p style="color:var(--text-light); font-size:0.9rem;">Technicien ESE</p>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-toggle"><span><i class="fa-solid fa-house icon-left"></i> Accueil</span></a></li>
+            
+            <li>
+                <details>
+                    <summary class="nav-toggle">
+                        <span><i class="fa-solid fa-folder-open icon-left"></i> Projets</span>
+                        <i class="fa-solid fa-chevron-down chevron"></i>
+                    </summary>
+                    <ul class="submenu">
+                        <li><a href="BUT.html" class="nav-sublink">🎓 Projets BUT</a></li>
+                        <li><a href="BTS.html" class="nav-sublink">🏭 Projet BTS</a></li>
+                        <li><a href="Perso.html" class="nav-sublink">🚀 Projets Perso</a></li>
+                    </ul>
+                </details>
+            </li>
+
+            <li><a href="Experience.html" class="nav-toggle"><span><i class="fa-solid fa-briefcase icon-left"></i> Expérience</span></a></li>
+
+            <li>
+                <details open>
+                    <summary class="nav-toggle active">
+                        <span><i class="fa-solid fa-layer-group icon-left"></i> Compétences</span>
+                        <i class="fa-solid fa-chevron-down chevron"></i>
+                    </summary>
+                    <ul class="submenu">
+                        <li><a href="Concevoir.html" class="nav-sublink">C1. Concevoir</a></li>
+                        <li><a href="Implanter.html" class="nav-sublink active">C2. Implanter</a></li>
+                        <li><a href="Verifier.html" class="nav-sublink">C3. Vérifier</a></li>
+                        <li><a href="Maintenir.html" class="nav-sublink">C4. Maintenir</a></li>
+                        <li><a href="Manager.html" class="nav-sublink">C5. Manager</a></li>
+                    </ul>
+                </details>
+            </li>
+        </ul>
+
+    </aside>
+
+    <div class="main-content">
+        
+        <header>
+            <h1>Compétence : Implanter</h1>
+            <p class="subtitle">
+                Du virtuel au réel. <br>
+                Ma capacité à fabriquer, assembler, câbler et mettre en service des systèmes électroniques fonctionnels.
+            </p>
+        </header>
+
+        <article class="step-card">
+            <div class="step-number">1</div>
+            <h3>Approvisionnement & PCB</h3>
+            <p class="step-intro">
+                Avant de chauffer le fer, la fabrication commence par la génération des fichiers de production (Gerber) et la gestion rigoureuse des composants (BOM).
+            </p>
+
+            <div class="examples-grid">
+                <div class="mini-card">
+                    <h4>Dossier Fabrication <span class="context-tag tag-but">Robot Sumo</span></h4>
+                    <p>
+                        Génération de l'intégralité du <strong>Dossier de Fabrication (DDF)</strong> pour le sous-traitant : fichiers Gerber pour le circuit imprimé, plan d'implantation pour le placement et BOM (Bill of Materials) avec les références fournisseurs (Farnell/RS) pour éviter les ruptures de stock.
+                    </p>
+                    </div>
+
+                <div class="mini-card">
+                    <h4>Approvisionnement <span class="context-tag tag-thales">Stage Thales</span></h4>
+                    <p>
+                        Dans le cadre du projet d'outillage, j'ai dû identifier et commander la visserie spécifique et les profilés aluminium, en respectant les contraintes budgétaires du service NPI.
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <article class="step-card">
+            <div class="step-number">2</div>
+            <h3>Câblage & Soudure (CMS / Traversant)</h3>
+            <p class="step-intro">
+                Le cœur du métier : l'assemblage des cartes électroniques. Je maîtrise les techniques de brasure, du gros composant de puissance au minuscule CMS.
+            </p>
+
+            <div class="examples-grid">
+                <div class="mini-card">
+                    <h4>Microsoudure & Air Chaud <span class="context-tag tag-perso">Projets Perso</span></h4>
+                    <p>
+                        À domicile, j'interviens sur des cartes mères complexes (ex: Nintendo Switch). Je maîtrise l'utilisation de la <strong>station à air chaud</strong> pour dessouder des puces QFN sans arracher les pistes, ainsi que l'usage du flux pour ressouder proprement des composants microscopiques.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <h4>Câblage Mixte <span class="context-tag tag-but">Projet JRC</span></h4>
+                    <p>
+                        Assemblage du module "Joueur" : soudure de composants CMS (résistances, capa) au four, et soudure traversante robuste pour les connecteurs USB et boutons poussoirs industriels soumis à des contraintes mécaniques fortes.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <h4>Connectique RF <span class="context-tag tag-but">Antenne</span></h4>
+                    <p>
+                        Soudure de précision sur le connecteur SMA. La difficulté était de souder l'âme du câble coaxial sur le Gamma-Match en aluminium sans faire fondre le diélectrique, garantissant ainsi l'intégrité du signal radio.
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <article class="step-card">
+            <div class="step-number">3</div>
+            <h3>Assemblage Mécanique & Intégration</h3>
+            <p class="step-intro">
+                L'électronique ne flotte pas dans l'air. Il faut l'intégrer dans un châssis, gérer les câbles et assurer la solidité de l'ensemble.
+            </p>
+
+            <div class="examples-grid">
+                <div class="mini-card">
+                    <h4>Usinage & Montage <span class="context-tag tag-but">Antenne HB9CV</span></h4>
+                    <p>
+                        Travail des matériaux : découpe des tubes d'aluminium au millimètre près pour respecter les calculs de simulation. Perçage du boom et assemblage mécanique sur la crosse en carbone pour garantir légèreté et maniabilité lors de la course.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <h4>Intégration Châssis <span class="context-tag tag-but">Robot Sumo</span></h4>
+                    <p>
+                        Fixation des motoréducteurs et des roues. J'ai réalisé un "Cable Management" soigné (gaines, colliers) pour éviter que les fils ne se prennent dans les parties mobiles ou ne soient arrachés par le robot adverse lors des chocs.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <h4>Prototypage Outillage <span class="context-tag tag-thales">Stage Thales</span></h4>
+                    <p>
+                        Assemblage complet du prototype d'aide à la production. Ajustement mécanique des pièces imprimées en 3D pour qu'elles s'emboîtent parfaitement sur le support existant.
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <article class="step-card">
+            <div class="step-number">4</div>
+            <h3>Mise en Service (Smoke Test)</h3>
+            <p class="step-intro">
+                Le moment de vérité. La première mise sous tension doit être méthodique pour ne rien griller.
+            </p>
+
+            <div class="examples-grid">
+                <div class="mini-card">
+                    <h4>Protocole d'allumage <span class="context-tag tag-bts">Projet BTS</span></h4>
+                    <p>
+                        Lors du premier test du banc ATX, j'ai utilisé une alimentation de laboratoire limitée en courant pour prévenir tout court-circuit. J'ai validé étage par étage : d'abord le 5V logique, puis la commande des relais, avant de brancher une vraie alimentation de PC.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <h4>Test Fonctionnel <span class="context-tag tag-perso">Réparation</span></h4>
+                    <p>
+                        Après remontage d'une console ou manette, je réalise une batterie de tests complets (calibrage joysticks, test tactile, charge) pour confirmer que la réparation est pérenne avant de considérer l'intervention comme terminée.
+                    </p>
+                </div>
+            </div>
+        </article>
+
+    </div>
+
+</body>
+</html>

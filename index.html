@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Martin Demasy</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- STYLE CSS (Retour au Bleu & Blanc) --- */
+        :root {
+            --primary: #0056b3;        /* Bleu principal */
+            --primary-dark: #003d82;   /* Bleu foncé */
+            --accent: #3b82f6;         /* Bleu clair */
+            --transverse: #6f42c1;     /* Violet */
+            --bg-body: #f4f6f9;        /* Gris très clair */
+            --bg-card: #ffffff;        /* Blanc */
+            --text-main: #1f2937;      /* Gris foncé */
+            --text-light: #6b7280;     /* Gris moyen */
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- Navigation --- */
+        nav {
+            background: var(--bg-card);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        nav .logo {
+            font-weight: 700; font-size: 1.2rem; color: var(--primary); text-decoration: none;
+        }
+
+        nav ul {
+            list-style: none; display: flex; gap: 1.5rem; flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none; color: var(--text-main); font-weight: 500; transition: color 0.3s;
+        }
+        nav a:hover, nav a.active { color: var(--primary); }
+
+        /* --- Conteneur Principal --- */
+        main {
+            max-width: 1100px; margin: 2rem auto; padding: 0 1.5rem;
+            width: 100%; flex: 1;
+        }
+
+        /* --- SECTION HERO (En-tête avec Photo) --- */
+        .hero-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 4rem 0;
+            gap: 2rem;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .hero-btns {
+            display: flex; gap: 1rem; flex-wrap: wrap;
+        }
+
+        /* Cadre Photo */
+        .hero-photo {
+            flex: 0 0 250px; /* Taille fixe pour la zone photo */
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-photo img {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%; /* Rond */
+            object-fit: cover;
+            border: 5px solid var(--bg-card); /* Bordure blanche */
+            box-shadow: 0 0 0 4px var(--primary), var(--shadow); /* Double bordure bleue + ombre */
+        }
+
+        /* --- Titres Sections --- */
+        h2 { font-size: 1.8rem; color: var(--text-main); margin: 3.5rem 0 1.5rem; border-left: 5px solid var(--accent); padding-left: 1rem; }
+        
+        h3.section-title {
+            font-size: 1.1rem; color: var(--text-light); text-transform: uppercase;
+            letter-spacing: 1px; margin: 2rem 0 1rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.5rem;
+        }
+
+        /* --- Grilles --- */
+        .grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;
+        }
+        .grid-4 {
+            display: grid; gap: 1.5rem; grid-template-columns: repeat(4, 1fr);
+        }
+
+        /* --- Cartes --- */
+        .card {
+            background: var(--bg-card); border-radius: var(--radius); box-shadow: var(--shadow);
+            padding: 2rem; transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none; color: inherit; display: flex; flex-direction: column;
+            height: 100%; border: 1px solid transparent; text-align: center;
+        }
+        .card.left-align { text-align: left; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); border-color: #e5e7eb; }
+
+        .card.transverse { border-top: 4px solid var(--transverse); }
+        .card.transverse .card-icon, .card.transverse h3 { color: var(--transverse); }
+        
+        .card.experience { border-left: 4px solid var(--primary); flex-direction: row; align-items: center; text-align: left; gap: 1.5rem; }
+        .card.experience .card-icon { margin-bottom: 0; font-size: 2.5rem; }
+
+        .card h3 { color: var(--primary); margin-bottom: 0.5rem; font-size: 1.25rem; }
+        .card p { color: var(--text-light); font-size: 0.95rem; flex-grow: 1; }
+        .card-icon { font-size: 2.2rem; margin-bottom: 1rem; color: var(--accent); }
+        .card-link { margin-top: 1rem; font-weight: 600; color: var(--primary); font-size: 0.9rem; display: inline-block; }
+
+        /* --- Boutons --- */
+        .btn {
+            display: inline-block; background-color: var(--primary); color: white;
+            padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600;
+            transition: background-color 0.3s; text-align: center; border: none; cursor: pointer;
+        }
+        .btn:hover { background-color: var(--primary-dark); }
+        .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+        .btn-outline:hover { background: var(--primary); color: white; }
+
+        footer { background: white; text-align: center; padding: 2rem; margin-top: 4rem; color: var(--text-light); border-top: 1px solid #e5e7eb; }
+
+        /* Responsive */
+        @media (max-width: 992px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) {
+            .hero-section { flex-direction: column-reverse; text-align: center; } /* Sur mobile, photo au dessus ou dessous */
+            .hero-btns { justify-content: center; }
+            .grid-4 { grid-template-columns: 1fr; }
+            .card.experience { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">Martin Demasy</a>
+        <ul>
+            <li><a href="index.html" class="active">Accueil</a></li>
+            <li><a href="BUT.html">Projets</a></li>
+            <li><a href="Experience.html">Expérience</a></li>
+            <li><a href="Concevoir.html">Compétences</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        
+        <section class="hero-section">
+            <div class="hero-text">
+                <h1>Martin Demasy</h1>
+                <div class="hero-btns">
+                    <a href="Concevoir.html" class="btn">Découvrir mes compétences</a>
+                    <a href="https://drive.google.com/uc?export=download&id=117JN4xXBzW2PAWCPnP4mK6E7EOd7r5zv" class="btn btn-outline">
+    Télécharger mon CV <i class="fas fa-download"></i>
+</a>
+                </div>
+            </div>
+
+            <div class="hero-photo">
+                <img src="../Portfolio/photos/unnamed.png" alt="Photo de Martin Demasy" onerror="this.src='https://placehold.co/220x220?text=Photo+Ici'">
+            </div>
+        </section>
+
+        <section id="projets">
+            <h2>📂 Mes Projets</h2>
+            <div class="grid">
+                <a href="BTS.html" class="card left-align">
+                    <div class="card-icon"><i class="fa-solid fa-school"></i></div>
+                    <h3>Projet BTS</h3>
+                    <p>Découverte de mon projet technique réalisé lors de mon BTS SN option EC.</p>
+                    <span class="card-link">Voir le projet →</span>
+                </a>
+
+                <a href="BUT.html" class="card left-align">
+                    <div class="card-icon"><i class="fa-solid fa-robot"></i></div>
+                    <h3>Projets BUT</h3>
+                    <p>Synthèse des projets majeurs (Robot Sumo, SAE, CDR) du BUT GEII.</p>
+                    <span class="card-link">Voir les projets →</span>
+                </a>
+
+                <a href="Perso.html" class="card left-align">
+                    <div class="card-icon"><i class="fa-solid fa-laptop-code"></i></div>
+                    <h3>Projets Personnels</h3>
+                    <p>Réalisations et développements effectués en dehors du cadre scolaire.</p>
+                    <span class="card-link">Voir le projet →</span>
+                </a>
+            </div>
+        </section>
+
+        <section id="experience">
+            <h2>💼 Expérience Professionnelle</h2>
+            <a href="Experience.html" class="card experience">
+                <div class="card-icon"><i class="fa-solid fa-briefcase"></i></div>
+                <div>
+                    <h3>Mon Parcours Professionnel</h3>
+                    <p>Retrouvez ici le détail de mes stages, emplois et expériences en entreprise.</p>
+                    <span class="card-link">Voir le détail →</span>
+                </div>
+            </a>
+        </section>
+
+        <section id="competences">
+            <h2>🛠️ Mes Compétences</h2>
+            <p style="margin-bottom: 2rem; color: var(--text-light); text-align: center;">
+                Cliquez sur une compétence pour accéder au détail des activités.
+            </p>
+            
+            <h3 class="section-title">Cœur de métier</h3>
+            <div class="grid-4">
+                <a href="Concevoir.html" class="card">
+                    <div class="card-icon"><i class="fa-solid fa-pen-ruler"></i></div>
+                    <h3>Concevoir</h3>
+                    <p>Architecture, Choix techniques, Dossier de conception...</p>
+                </a>
+
+                <a href="Verifier.html" class="card">
+                    <div class="card-icon"><i class="fa-solid fa-check-double"></i></div>
+                    <h3>Vérifier</h3>
+                    <p>Protocoles d'essais, Conformité, Mesures...</p>
+                </a>
+
+                <a href="Maintenir.html" class="card">
+                    <div class="card-icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                    <h3>Maintenir</h3>
+                    <p>Maintenance préventive & corrective.</p>
+                </a>
+
+                <a href="Implanter.html" class="card">
+                    <div class="card-icon"><i class="fa-solid fa-microchip"></i></div>
+                    <h3>Implanter</h3>
+                    <p>Fabrication, Câblage, Mise en service.</p>
+                </a>
+            </div>
+
+            <h3 class="section-title">Compétence Transverse</h3>
+            <div class="grid" style="grid-template-columns: 1fr; max-width: 400px; margin: 0 auto;">
+                <a href="Manager.html" class="card transverse">
+                    <div class="card-icon"><i class="fa-solid fa-people-group"></i></div>
+                    <h3>Manager</h3>
+                    <p>Agir en professionnel responsable, Gestion de projet, Communication.</p>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Martin Demasy - Portfolio BUT GEII</p>
+    </footer>
+
+</body>
+</html>

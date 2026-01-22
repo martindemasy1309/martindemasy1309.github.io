@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compétence Maintenir - Martin Demasy</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- STYLE GLOBAL --- */
+        :root {
+            --primary: #0056b3;
+            --primary-dark: #003d82;
+            --accent: #3b82f6;
+            --maintenance: #e67e22; /* Orange : Maintenance / Sécurité / Intervention */
+            --bg-body: #f4f6f9;
+            --bg-card: #ffffff;
+            --text-main: #1f2937;
+            --text-light: #6b7280;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        /* --- SIDEBAR (Navigation Gauche) --- */
+        .sidebar {
+            width: 280px;
+            background: var(--bg-card);
+            height: 100vh;
+            position: fixed;
+            left: 0; top: 0;
+            padding: 2rem;
+            display: flex; flex-direction: column;
+            border-right: 1px solid #e5e7eb;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .profile-area { text-align: center; margin-bottom: 2rem; }
+        .avatar-circle {
+            width: 80px; height: 80px;
+            background: var(--primary);
+            border-radius: 50%; margin: 0 auto 1rem auto;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; font-weight: bold; color: white;
+            box-shadow: 0 4px 10px rgba(0, 86, 179, 0.3);
+        }
+
+        /* Navigation Links */
+        .nav-links { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+        
+        .nav-toggle {
+            display: flex; justify-content: space-between; align-items: center;
+            width: 100%; padding: 0.8rem 1rem;
+            color: var(--text-light); border-radius: 8px;
+            transition: all 0.2s; cursor: pointer; font-weight: 500;
+        }
+        .nav-toggle:hover, .nav-toggle.active { background: #eff6ff; color: var(--primary); }
+        .nav-toggle i.icon-left { width: 20px; text-align: center; margin-right: 10px; }
+        
+        /* Sous-menus */
+        details > summary { list-style: none; outline: none; }
+        details > summary::-webkit-details-marker { display: none; }
+        details[open] .nav-toggle i.chevron { transform: rotate(180deg); }
+        
+        .submenu {
+            list-style: none; padding-left: 2.5rem; margin-top: 0.2rem;
+            display: flex; flex-direction: column; gap: 0.2rem;
+        }
+        .nav-sublink {
+            display: block; color: var(--text-light); padding: 0.4rem 0.8rem;
+            font-size: 0.85rem; border-left: 2px solid #e5e7eb; transition: all 0.2s;
+        }
+        .nav-sublink:hover, .nav-sublink.active { color: var(--primary); border-left-color: var(--primary); background: #f9fafb; }
+
+        .btn-cv {
+            display: block; text-align: center; background: var(--primary); color: white;
+            padding: 0.8rem; border-radius: 8px; font-weight: 600; margin-top: auto;
+            transition: background 0.2s;
+        }
+        .btn-cv:hover { background: var(--primary-dark); }
+
+        /* --- CONTENU PRINCIPAL --- */
+        .main-content { margin-left: 280px; flex: 1; padding: 4rem; width: 100%; }
+        
+        h1 { font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--primary); line-height: 1.2; }
+        .subtitle { color: var(--text-light); font-size: 1.1rem; margin-bottom: 3rem; max-width: 800px; }
+
+        /* --- ÉTAPES DE MAINTENANCE --- */
+        .step-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            border-left: 5px solid var(--maintenance);
+            position: relative;
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -20px; left: -20px;
+            background: var(--maintenance); color: white;
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 1.4rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            border: 3px solid #fff;
+        }
+
+        .step-card h3 { color: var(--text-main); margin-top: 0; font-size: 1.5rem; margin-bottom: 0.5rem; padding-left: 1rem; }
+        .step-intro { color: var(--text-light); margin-bottom: 2rem; padding-left: 1rem; font-size: 1rem; }
+
+        /* --- GRILLE D'EXEMPLES --- */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .mini-card {
+            background: #fffbf7; /* Orange très très pâle */
+            border: 1px solid #ffe4cc;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex; flex-direction: column;
+        }
+        .mini-card:hover { 
+            border-color: var(--maintenance); 
+            transform: translateY(-3px); 
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+        }
+
+        .mini-card h4 { 
+            color: var(--maintenance); font-size: 1.1rem; margin-bottom: 0.8rem; 
+            display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem;
+        }
+        
+        /* Tags contextuels */
+        .context-tag {
+            font-size: 0.75rem; padding: 3px 10px; border-radius: 12px; font-weight: 600; white-space: nowrap;
+        }
+        .tag-bts { background: #dbeafe; color: #1e40af; }     /* Bleu */
+        .tag-thales { background: #e0e7ff; color: #3730a3; }  /* Indigo */
+        .tag-but { background: #d1fae5; color: #065f46; }     /* Vert */
+        .tag-perso { background: #fef3c7; color: #92400e; }   /* Orange */
+        .tag-work { background: #f3f4f6; color: #1f2937; }    /* Gris */
+
+        .mini-card p { font-size: 0.95rem; color: #4b5563; margin-bottom: 1rem; line-height: 1.6; flex-grow: 1; }
+        
+        .btn-link {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            color: var(--maintenance); font-size: 0.9rem; font-weight: 600; 
+            text-decoration: none; margin-top: auto;
+            transition: color 0.2s;
+        }
+        .btn-link:hover { color: #d35400; }
+
+        /* Liste de check (icones) */
+        .check-list { list-style: none; padding: 0; margin-top: 0.5rem; }
+        .check-list li { display: flex; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.4rem; font-size: 0.9rem; color: #555; }
+        .check-list i { color: #22c55e; margin-top: 4px; }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; padding: 2rem; }
+            .step-number { left: 0; top: -25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="profile-area">
+            <div class="avatar-circle">MD</div>
+            <h2>Martin D.</h2>
+            <p style="color:var(--text-light); font-size:0.9rem;">Technicien ESE</p>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-toggle"><span><i class="fa-solid fa-house icon-left"></i> Accueil</span></a></li>
+            
+            <li>
+                <details>
+                    <summary class="nav-toggle">
+                        <span><i class="fa-solid fa-folder-open icon-left"></i> Projets</span>
+                        <i class="fa-solid fa-chevron-down chevron"></i>
+                    </summary>
+                    <ul class="submenu">
+                        <li><a href="BUT.html" class="nav-sublink">🎓 Projets BUT</a></li>
+                        <li><a href="BTS.html" class="nav-sublink">🏭 Projet BTS</a></li>
+                        <li><a href="Perso.html" class="nav-sublink">🚀 Projets Perso</a></li>
+                    </ul>
+                </details>
+            </li>
+
+            <li><a href="Experience.html" class="nav-toggle"><span><i class="fa-solid fa-briefcase icon-left"></i> Expérience</span></a></li>
+
+            <li>
+                <details open>
+                    <summary class="nav-toggle active">
+                        <span><i class="fa-solid fa-layer-group icon-left"></i> Compétences</span>
+                        <i class="fa-solid fa-chevron-down chevron"></i>
+                    </summary>
+                    <ul class="submenu">
+                        <li><a href="Concevoir.html" class="nav-sublink">C1. Concevoir</a></li>
+                        <li><a href="Implanter.html" class="nav-sublink">C2. Implanter</a></li>
+                        <li><a href="Verifier.html" class="nav-sublink">C3. Vérifier</a></li>
+                        <li><a href="Maintenir.html" class="nav-sublink active">C4. Maintenir</a></li>
+                        <li><a href="Manager.html" class="nav-sublink">C5. Manager</a></li>
+                    </ul>
+                </details>
+            </li>
+        </ul>
+
+    </aside>
+
+    <div class="main-content">
+        
+        <header>
+            <h1>Compétence : Maintenir</h1>
+            <p class="subtitle">
+                Un système technique doit durer. <br>
+                Ma démarche : Prévenir les pannes (Préventif), diagnostiquer rapidement (Correctif) et concevoir des outils pour faciliter la réparation (Maintenabilité).
+            </p>
+        </header>
+
+        <article class="step-card">
+            <div class="step-number">1</div>
+            <h3>Maintenance Préventive</h3>
+            <p class="step-intro">
+                Intervenir avant la panne. C'est l'inspection rigoureuse et l'entretien pour éviter l'arrêt de fonctionnement critique.
+            </p>
+
+            <div class="examples-grid">
+                <div class="mini-card">
+                    <h4>Check-list Compétition <span class="context-tag tag-but">Antenne / Robot</span></h4>
+                    <p>
+                        Avant chaque passage devant le jury ou compétition, j'applique une procédure de vérification stricte pour éviter la "panne bête" :
+                    </p>
+                    <ul class="check-list">
+                        <li><i class="fa-solid fa-check"></i> Resserrage au couple de la visserie (M3/M4) soumise aux vibrations.</li>
+                        <li><i class="fa-solid fa-check"></i> Inspection visuelle des soudures et connecteurs (traces d'oxydation ou fissure).</li>
+                        <li><i class="fa-solid fa-check"></i> Charge des batteries LiPo et équilibrage des cellules.</li>
+                    </ul>
+                </div>
+
+                <div class="mini-card">
+                    <h4>Entretien Hardware <span class="context-tag tag-perso">Projets Perso</span></h4>
+                    <p>
+                        Sur mes équipements personnels ou ceux de mes proches (PC, Consoles), je réalise un nettoyage périodique : dépoussiérage des radiateurs pour éviter la surchauffe, remplacement de la pâte thermique séchée sur CPU/GPU, et nettoyage des contacts au nettoyant flux.
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <article class="step-card">
+            <div class="step-number">2</div>
+            <h3>Maintenance Corrective (Dépannage)</h3>
+            <p class="step-intro">
+                Quand la panne est là, il faut être méthodique. Diagnostic > Isolation > Réparation > Test.
+            </p>
+
+            <div class="examples-grid">
+                <div class="mini-card">
+                    <h4>Méthode SAV <span class="context-tag tag-work">Cybertek</span></h4>
+                    <p>
+                        Durant 2 ans, j'ai diagnostiqué des centaines de PC. Ma méthode : les <strong>tests croisés</strong>. 
+                        <br><em>Cas concret :</em> PC qui ne démarre pas. Je teste l'alimentation sur un banc de test, je teste la RAM sur une carte mère de référence. Je procède par élimination jusqu'à isoler le composant coupable (ex: Carte Mère HS).
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <h4>Sauvetage Nintendo Switch <span class="context-tag tag-perso">Projets Perso</span></h4>
+                    <p>
+                        <strong>Symptôme :</strong> Pas d'image sur la TV (Dock).
+                        <br><strong>Diagnostic :</strong> Court-circuit identifié au multimètre autour de la puce P13USB (Gestion vidéo).
+                        <br><strong>Action :</strong> Remplacement du composant CMS défectueux à l'air chaud.
+                        <br><strong>Résultat :</strong> Console 100% fonctionnelle.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <h4>Intervention Terrain <span class="context-tag tag-but">Robot Sumo</span></h4>
+                    <p>
+                        En pleine séance de test, une roue du robot s'est bloquée.
+                        <br><em>Diagnostic :</em> Fil moteur dessoudé à cause des chocs.
+                        <br><em>Réparation d'urgence :</em> Ressoudage rapide + sécurisation mécanique à la colle chaude pour finir la séance.
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <article class="step-card">
+            <div class="step-number">3</div>
+            <h3>Amélioration de la Maintenabilité</h3>
+            <p class="step-intro">
+                La maintenance ne sert pas qu'à réparer, elle sert aussi à créer des outils pour réparer mieux et plus vite à l'avenir.
+            </p>
+
+            <div class="examples-grid">
+                <div class="mini-card">
+                    <h4>Création Banc de Test <span class="context-tag tag-bts">Projet BTS</span></h4>
+                    <p>
+                        Mon projet de fin d'études est né d'un besoin de maintenance. Le testeur d'alimentation existant chez Cybertek était imprécis. J'ai conçu un outil automatisé qui divise par 4 le temps de diagnostic d'une alimentation ATX et sécurise le technicien.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <h4>Outillage Robuste <span class="context-tag tag-thales">Stage Thales</span></h4>
+                    <p>
+                        Lors de la conception de l'outillage de production, j'ai intégré la contrainte de maintenabilité : les pièces d'usure (zones de contact) sont démontables et remplaçables sans avoir à jeter tout l'outillage.
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <article class="step-card">
+            <div class="step-number">4</div>
+            <h3>Rédaction de Procédures (Gamme)</h3>
+            <p class="step-intro">
+                Pour qu'une réparation soit durable et reproductible par d'autres, il faut documenter les gestes techniques.
+            </p>
+
+            <div class="examples-grid">
+                <div class="mini-card">
+                    <h4>Gamme de Montage <span class="context-tag tag-but">Antenne</span></h4>
+                    <p>
+                        J'ai rédigé un guide pas-à-pas (avec photos) pour l'assemblage de l'antenne CDR. Cela permet à n'importe quel étudiant de remonter le système sans inverser la polarité du Gamma-Match ou abîmer le connecteur SMA.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <h4>Rapports Techniques <span class="context-tag tag-bts">Documentation</span></h4>
+                    <p>
+                        Documentation des pannes fréquentes rencontrées en SAV et création de fiches réflexes pour les stagiaires suivants (ex: "Symptômes typiques d'une panne GPU vs RAM").
+                    </p>
+                </div>
+            </div>
+        </article>
+
+    </div>
+
+</body>
+</html>

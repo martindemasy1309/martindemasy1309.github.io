@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projets BUT - Martin Demasy</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- STYLE CSS (Bleu & Blanc) --- */
+        :root {
+            --primary: #0056b3; --primary-dark: #003d82; --accent: #3b82f6;
+            --bg-body: #f4f6f9; --bg-card: #ffffff; --text-main: #1f2937; --text-light: #6b7280;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); --radius: 12px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg-body); color: var(--text-main); display: flex; min-height: 100vh; }
+        a { text-decoration: none; color: inherit; }
+
+        /* SIDEBAR */
+        .sidebar { width: 280px; background: var(--bg-card); height: 100vh; position: fixed; left: 0; top: 0; padding: 2rem; display: flex; flex-direction: column; border-right: 1px solid #e5e7eb; z-index: 1000; overflow-y: auto; }
+        .profile-area { text-align: center; margin-bottom: 2rem; }
+        .avatar-circle { width: 80px; height: 80px; background: var(--primary); border-radius: 50%; margin: 0 auto 1rem auto; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; color: white; box-shadow: 0 4px 10px rgba(0, 86, 179, 0.3); }
+        .nav-links { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+        .nav-toggle { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0.8rem 1rem; color: var(--text-light); border-radius: 8px; transition: all 0.2s; cursor: pointer; font-weight: 500; }
+        .nav-toggle:hover, .nav-toggle.active { background: #eff6ff; color: var(--primary); }
+        .nav-toggle i.icon-left { width: 20px; text-align: center; margin-right: 10px; }
+        details > summary { list-style: none; outline: none; } details > summary::-webkit-details-marker { display: none; } details[open] .nav-toggle i.chevron { transform: rotate(180deg); }
+        .submenu { list-style: none; padding-left: 2.5rem; margin-top: 0.2rem; display: flex; flex-direction: column; gap: 0.2rem; }
+        .nav-sublink { display: block; color: var(--text-light); padding: 0.4rem 0.8rem; font-size: 0.85rem; border-left: 2px solid #e5e7eb; transition: all 0.2s; }
+        .nav-sublink:hover, .nav-sublink.active { color: var(--primary); border-left-color: var(--primary); background: #f9fafb; }
+        .btn-cv { display: block; text-align: center; background: var(--primary); color: white; padding: 0.8rem; border-radius: 8px; font-weight: 600; margin-top: auto; transition: background 0.2s; }
+        
+        /* CONTENT */
+        .main-content { margin-left: 280px; flex: 1; padding: 4rem; width: 100%; }
+        h1 { font-size: 2.5rem; color: var(--primary); margin-bottom: 0.5rem; }
+        .subtitle { color: var(--text-light); margin-bottom: 2rem; font-size: 1.1rem; }
+        
+        /* BOX INFO SAE */
+        .info-box { background: #e0f2fe; border-left: 5px solid var(--primary); padding: 1.5rem; border-radius: 8px; margin-bottom: 3rem; color: #0c4a6e; }
+        .info-box strong { font-weight: 600; }
+
+        /* PROJET CARD */
+        .project-section { background: var(--bg-card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 2.5rem; margin-bottom: 3rem; }
+        .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 1rem; }
+        .project-title h2 { font-size: 1.8rem; color: var(--primary); margin: 0; }
+        .project-title span { background: #e0e7ff; color: var(--primary); padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-left: 1rem; }
+        
+        .tech-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0; }
+        .tag { background: #f3f4f6; color: var(--text-main); padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.85rem; font-weight: 500; border: 1px solid #e5e7eb; }
+        
+        .doc-buttons { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.5rem; }
+        .btn-doc { background: white; border: 1px solid var(--primary); color: var(--primary); padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+        .btn-doc:hover, .btn-doc.active { background: var(--primary); color: white; }
+        
+        /* Bouton Spécial Rapport */
+        .btn-rapport { background: #eff6ff; border-color: var(--primary); color: var(--primary-dark); font-weight: 600; }
+        .btn-rapport:hover { background: var(--primary-dark); color: white; }
+        .btn-rapport.active { background: var(--primary-dark); color: white; border-color: var(--primary-dark); }
+
+        .pdf-viewer { width: 100%; height: 600px; border: none; background: #e5e7eb; margin-top: 1.5rem; border-radius: 8px; }
+
+        @media (max-width: 900px) { .sidebar { display: none; } .main-content { margin-left: 0; padding: 2rem; } }
+    </style>
+    
+    <script>
+        function loadPdf(frameId, url, btn) {
+            document.getElementById(frameId).src = url;
+            // Gestion de l'état actif des boutons
+            let container = btn.parentElement;
+            let buttons = container.querySelectorAll('.btn-doc');
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+    </script>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="profile-area">
+            <div class="avatar-circle">MD</div>
+            <h2>Martin D.</h2>
+            <p style="color:var(--text-light); font-size:0.9rem;">Technicien ESE</p>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-toggle"><span><i class="fa-solid fa-house icon-left"></i> Accueil</span></a></li>
+            <li>
+                <details open>
+                    <summary class="nav-toggle active">
+                        <span><i class="fa-solid fa-folder-open icon-left"></i> Projets</span>
+                        <i class="fa-solid fa-chevron-down chevron"></i>
+                    </summary>
+                    <ul class="submenu">
+                        <li><a href="BUT.html" class="nav-sublink active">🎓 Projets BUT</a></li>
+                        <li><a href="BTS.html" class="nav-sublink">🏭 Projet BTS</a></li>
+                        <li><a href="Perso.html" class="nav-sublink">🚀 Projets Perso</a></li>
+                    </ul>
+                </details>
+            </li>
+            <li><a href="Experience.html" class="nav-toggle"><span><i class="fa-solid fa-briefcase icon-left"></i> Expérience</span></a></li>
+            <li>
+                <details>
+                    <summary class="nav-toggle">
+                        <span><i class="fa-solid fa-layer-group icon-left"></i> Compétences</span>
+                        <i class="fa-solid fa-chevron-down chevron"></i>
+                    </summary>
+                    <ul class="submenu">
+                        <li><a href="Concevoir.html" class="nav-sublink">C1. Concevoir</a></li>
+                        <li><a href="Implanter.html" class="nav-sublink">C2. Implanter</a></li>
+                        <li><a href="Verifier.html" class="nav-sublink">C3. Vérifier</a></li>
+                        <li><a href="Maintenir.html" class="nav-sublink">C4. Maintenir</a></li>
+                        <li><a href="Manager.html" class="nav-sublink">C5. Manager</a></li>
+                    </ul>
+                </details>
+            </li>
+        </ul>
+        <a href="https://drive.google.com/uc?export=download&id=117JN4xXBzW2PAWCPnP4mK6E7EOd7r5zv" class="btn-cv">Télécharger CV</a>
+    </aside>
+
+    <div class="main-content">
+        <h1>Mes Projets BUT GEII</h1>
+        <p class="subtitle">Conception, réalisation et validation de systèmes embarqués en équipe.</p>
+
+        <div class="info-box">
+            <p><i class="fa-solid fa-circle-info"></i> <strong>Qu'est-ce qu'une SAE ?</strong></p>
+            <p>
+                Les <strong>S</strong>ituations d'<strong>A</strong>pprentissage et d'<strong>É</strong>valuation sont des projets complexes qui remplacent les partiels classiques en BUT. 
+                Elles nous mettent en situation professionnelle réelle : nous devons répondre à un cahier des charges, gérer un budget, respecter des délais et produire des livrables techniques (Dossiers de conception, Prototypes fonctionnels).
+            </p>
+        </div>
+
+        <article id="rms" class="project-section">
+            <div class="project-header">
+                <div class="project-title">
+                    <h2>🤖 Robot Mini-Sumo <span style="background:#d1fae5; color:#065f46;">EQ23</span></h2>
+                </div>
+            </div>
+            <p><strong>Objectif :</strong> Concevoir un robot autonome de moins de 500g capable de pousser un adversaire hors du ring (Dohyo).</p>
+            <div class="tech-tags">
+                <span class="tag">Arduino UNO</span>
+                <span class="tag">Capteurs Sharp (IR)</span>
+                <span class="tag">Pont en H (DRV8833)</span>
+            </div>
+            <p style="margin-top: 1rem; color: #4b5563;">
+                Conception électronique complète (PCB sous Kicad) et programmation de la stratégie de combat (Machine à états).
+            </p>
+
+            <div class="doc-buttons">
+                <button class="btn-doc btn-rapport" onclick="loadPdf('frame-rms', 'https://drive.google.com/file/d/1Bv0mv3J26Lh9jcdWZzDArSvD3XyFRUBv/preview', this)"><i class="fa-solid fa-file-contract"></i> Rapport de Projet</button>
+                
+                <button class="btn-doc" onclick="loadPdf('frame-rms', 'https://drive.google.com/file/d/1iwlxdlZEQKAv-GESjL4wew9HRSzNBFew/preview', this)">Cahier des Charges (CDC)</button>
+                <button class="btn-doc active" onclick="loadPdf('frame-rms', 'https://drive.google.com/file/d/1jNEJlPdCbxdTeU1C6wwyTp2_OJowWRNj/preview', this)">Dossier Conception (DDC)</button>
+                <button class="btn-doc" onclick="loadPdf('frame-rms', 'https://drive.google.com/file/d/1qfOK0fNoGPXK96Y8C5EtLpLbjqaoE8O6/preview', this)">Dossier Vérification (DDV)</button>
+                <button class="btn-doc" onclick="loadPdf('frame-rms', 'https://drive.google.com/file/d/1ihj1F-1-2Fvtc2-7bHF-8leRnt8BNRfPmzeGnrpN-w8/preview', this)">Dossier Fab (DDF)</button>
+            </div>
+            <iframe id="frame-rms" src="https://drive.google.com/file/d/1jNEJlPdCbxdTeU1C6wwyTp2_OJowWRNj/preview" class="pdf-viewer" title="Documents Robot Sumo"></iframe>
+        </article>
+
+        <article id="cdr" class="project-section">
+            <div class="project-header">
+                <div class="project-title">
+                    <h2>📡 Challenge Radio (Antenne) <span style="background:#e0f2fe; color:#075985;">EQ28</span></h2>
+                </div>
+            </div>
+            <p><strong>Objectif :</strong> Réaliser une antenne directive pour la radiogoniométrie sportive (Chasse au renard) à 144 MHz.</p>
+            <div class="tech-tags">
+                <span class="tag">Radiofréquence (RF)</span>
+                <span class="tag">Antenne HB9CV</span>
+                <span class="tag">VNA</span>
+                <span class="tag">Simulation MMANA</span>
+            </div>
+            <div class="doc-buttons">
+                <button class="btn-doc btn-rapport" onclick="loadPdf('frame-cdr', 'https://drive.google.com/file/d/1_G0anovyQhSChOqVPDnZsYhQFuzvCyO7/preview', this)"><i class="fa-solid fa-file-contract"></i> Rapport de Projet</button>
+
+                <button class="btn-doc" onclick="loadPdf('frame-cdr', 'https://drive.google.com/file/d/1w6VX3Cvs3nN0FWjrIoGZgE5a4qzC3noD/preview', this)">Cahier des Charges (CDC)</button>
+                <button class="btn-doc active" onclick="loadPdf('frame-cdr', 'https://drive.google.com/file/d/1CqSZpk1Qrjr99xnmrTY2F4dpbB3bRF9N/preview', this)">Dossier Conception (DDC)</button>
+                <button class="btn-doc" onclick="loadPdf('frame-cdr', 'https://drive.google.com/file/d/1QzPnEuasoWEgKBIiP-3rJJuOpdHx3f5i/preview', this)">Dossier Vérification (DDV)</button>
+                <button class="btn-doc" onclick="loadPdf('frame-cdr', 'https://drive.google.com/file/d/1k2qRxPTwNGydAuA3bJJ7q5r0t_kGi6eD/preview', this)">Liste Contrôle Fab (LCF)</button>
+            </div>
+            <iframe id="frame-cdr" src="https://drive.google.com/file/d/1CqSZpk1Qrjr99xnmrTY2F4dpbB3bRF9N/preview" class="pdf-viewer" title="Documents Antenne"></iframe>
+        </article>
+
+        <article id="jrc" class="project-section">
+            <div class="project-header">
+                <div class="project-title">
+                    <h2>🎮 Jeu de Réflexe (JRC) <span style="background:#fae8ff; color:#86198f;">EQ14</span></h2>
+                </div>
+            </div>
+            <p><strong>Objectif :</strong> Conception d'un module "Joueur" robuste pour un jeu de rapidité type buzzer.</p>
+            <div class="doc-buttons">
+                <button class="btn-doc btn-rapport" onclick="loadPdf('frame-jrc', 'https://drive.google.com/file/d/1vAR0CCawI6rCOl8LQT9f0wOxxBnBmJ-_/preview', this)"><i class="fa-solid fa-file-contract"></i> Rapport de Projet</button>
+
+                <button class="btn-doc" onclick="loadPdf('frame-jrc', 'https://drive.google.com/file/d/1Hxbp2dpmJjcYmFN462xQSIR9zK4r6ACC/preview', this)">Cahier des Charges (CDC)</button>
+                <button class="btn-doc active" onclick="loadPdf('frame-jrc', 'https://drive.google.com/file/d/1uNVI0ugSG6LrYBe31ZfB04nlPRYKXX59/preview', this)">Dossier Conception (DDC)</button>
+                <button class="btn-doc" onclick="loadPdf('frame-jrc', 'https://drive.google.com/file/d/1MrRK_ug4gr-KCRfKPZoHD9psM9NewYkG/preview', this)">Dossier Vérification (DDV)</button>
+                <button class="btn-doc" onclick="loadPdf('frame-jrc', 'https://drive.google.com/file/d/1mA9DPFrgYYtg--D-CLlMrSf-Gh-XNAGv/preview', this)">Dossier Fab (DDF)</button>
+            </div>
+            <iframe id="frame-jrc" src="https://drive.google.com/file/d/1uNVI0ugSG6LrYBe31ZfB04nlPRYKXX59/preview" class="pdf-viewer" title="Documents JRC"></iframe>
+        </article>
+
+    </div>
+
+</body>
+</html>
